@@ -231,6 +231,7 @@ class Manager:
         self.formatters = Formatters(self)
         self.current_file = None
         self.docstring_trailing_line = docstring_trailing_line
+        self.og_line= None
 
     def _patch_unknown_directives(self, text: str) -> None:
         doc = new_document(str(self.current_file), self.settings)
@@ -330,8 +331,9 @@ class Manager:
         self._patch_unknown_directives(text)
         doc = new_document(str(self.current_file), self.settings)
         lines = text.splitlines()
-        if ":og:" in lines[0] and "title::" in lines[1]:
+        if ":og:" in lines[0]:
             text = "\n".join(lines[1:])
+            self.og_line = lines[0]
         parser = rst.Parser()
         parser.parse(text, doc)
         doc.reporter = IgnoreMessagesReporter(

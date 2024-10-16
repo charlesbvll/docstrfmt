@@ -255,8 +255,12 @@ def _process_rst(
             reporter.print(f"File '{str(file)}' could be reformatted.")
         elif file == "-" or raw_output:
             with lock or nullcontext():
+                if manager.og_line:
+                    output = manager.og_line + "\n" + output
                 _write_output(file, output, nullcontext(sys.stdout), raw_output)
         else:
+            if manager.og_line:
+                output = manager.og_line + "\n" + output
             _write_output(
                 file,
                 output,
