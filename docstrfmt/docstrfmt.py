@@ -330,8 +330,8 @@ class Manager:
         self._patch_unknown_directives(text)
         doc = new_document(str(self.current_file), self.settings)
         lines = text.splitlines()
-        if ":og:" in lines[0] and len(lines[1]) > 0:
-            text = text[2:]
+        if ":og:" in lines[0] and "title::" in lines[1]:
+            text = "\n".join(lines[1:])
         parser = rst.Parser()
         parser.parse(text, doc)
         doc.reporter = IgnoreMessagesReporter(
