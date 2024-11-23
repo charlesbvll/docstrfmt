@@ -244,6 +244,8 @@ def _process_rst(
     output = manager.format_node(line_length, doc)
     error_count = manager.error_count
     misformatted = False
+    if manager.og_line:
+        output = manager.og_line + "\n" + output
     if output == input_string:
         reporter.print(f"File '{str(file)}' is formatted correctly. Nice!", 1)
         if raw_output:
@@ -255,12 +257,8 @@ def _process_rst(
             reporter.print(f"File '{str(file)}' could be reformatted.")
         elif file == "-" or raw_output:
             with lock or nullcontext():
-                if manager.og_line:
-                    output = manager.og_line + "\n" + output
                 _write_output(file, output, nullcontext(sys.stdout), raw_output)
         else:
-            if manager.og_line:
-                output = manager.og_line + "\n" + output
             _write_output(
                 file,
                 output,
