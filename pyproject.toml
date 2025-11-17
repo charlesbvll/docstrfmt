@@ -2,6 +2,27 @@
 build-backend = "flit_core.buildapi"
 requires = ["flit_core >=3.4,<4"]
 
+[dependency-groups]
+dev = [
+  "packaging",
+  {include-group = "lint"},
+  {include-group = "test"}
+]
+lint = [
+  "pre-commit",
+  "pyright>=1.1.406",
+  "ruff>=0.0.292"
+]
+test = [
+  "aiohttp",
+  "pytest",
+  "pytest-aiohttp",
+  "tox-uv>=1.22.1"
+]
+ci = [
+  "coveralls"
+]
+
 [project]
 authors = [{name = "Joel Payne", email = "lilspazjoekp@gmail.com"}]
 classifiers = [
@@ -10,11 +31,11 @@ classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Programming Language :: Python",
   "Topic :: Documentation",
   "Topic :: Documentation :: Sphinx",
@@ -22,14 +43,18 @@ classifiers = [
   "Topic :: Utilities"
 ]
 dependencies = [
-  "black==24.*",
-  "click==8.*",
-  "docutils==0.20.*",
-  "libcst==1.*",
-  "platformdirs==4.*",
-  "sphinx>=7,<9",
-  "tabulate==0.9.*",
-  "toml==0.10.*"
+  "black>=24",
+  "click>=8",
+  "coverage>=7.11.0",
+  "docutils>=0.21",
+  "docutils-stubs==0.0.22",
+  "libcst>=1",
+  "platformdirs>=4",
+  "roman",
+  "sphinx>=7",
+  "tabulate>=0.9",
+  "tomli>=0.10;python_version<'3.11'",
+  "types-docutils==0.22.2.20251006"
 ]
 dynamic = ["version", "description"]
 keywords = ["black", "docutils", "autoformatter", "formatter", "lint", "restructuredtext", "rst", "sphinx"]
@@ -37,25 +62,11 @@ license = {file = "LICENSE.txt"}
 maintainers = [{name = "Joel Payne", email = "lilspazjoekp@gmail.com"}]
 name = "docstrfmt"
 readme = "README.rst"
-requires-python = "~=3.8"
+requires-python = ">=3.10"
 
 [project.optional-dependencies]
-ci = ["coveralls"]
 d = [
-  "aiohttp==3.*"
-]
-dev = [
-  "packaging",
-  "docstrfmt[lint]",
-  "docstrfmt[test]"
-]
-lint = [
-  "pre-commit",
-  "ruff >=0.0.292"
-]
-test = [
-  "pytest",
-  "pytest-aiohttp"
+  "aiohttp"
 ]
 
 [project.scripts]
@@ -63,18 +74,43 @@ docstrfmt = "docstrfmt.main:main"
 docstrfmtd = "docstrfmt.server:main [d]"
 
 [project.urls]
-"Issue Tracker" = "https://github.com/LilSpazJoekp/docstfmt/issues"
-"Source Code" = "https://github.com/LilSpazJoekp/docstfmt"
+"Issue Tracker" = "https://github.com/LilSpazJoekp/docstrfmt/issues"
+"Source Code" = "https://github.com/LilSpazJoekp/docstrfmt"
 
 [tool.black]
 extend_exclude = '/(\.venv.*)/'
 line-length = 88
 
+[tool.coverage.report]
+exclude_also = [
+  "if __name__ == __main__.:",
+  "def __repr__",
+  "def __str__",
+  "raise NotImplementedError",
+  "raise NotImplemented",
+  "except ImportError",
+  "except ModuleNotFoundError",
+  "if TYPE_CHECKING:"
+]
+omit = [
+  "tests/*",
+  "docstrfmt/__main__.py"
+]
+
 [tool.docstrfmt]
+files = ["docstrfmt", "tests"]
 extend_exclude = ["tests/test_files/error_files/*"]
 
 [tool.isort]
 profile = "black"
+
+[tool.pyright]
+include = ["docstrfmt"]
+reportPrivateImportUsage = false
+reportMissingImports = false
+executionEnvironments = [
+  {root = "docstrfmt/docstrfmt.py", reportAttributeAccessIssue = "none"}
+]
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
@@ -86,26 +122,30 @@ testpaths = "tests"
 include = [
   "docstrfmt/**/*.py"
 ]
-target-version = "py38"
+target-version = "py310"
 
 [tool.ruff.lint]
 ignore = [
   "A002", # shadowing built-in
-  "ANN101", # missing type annotation for self in method
-  "ANN102", # missing type annotation for cls in classmethod
   "ANN202", # missing return type for private method
   "ANN401", # typing.Any usage
+  "ARG001", # unused function argument
+  "ARG002", # unused method argument
   "ASYNC109", # Async function definition with a `timeout` parameter
   "D203", # 1 blank line required before class docstring
   "D213", # Multi-line docstring summary should start at the second line
   "E501", # line-length
+  "FIX002", # Line contains TODO
+  "G004", # Logging statement uses string formatting
+  "N801", # class names should use CapWords convention
+  "N802", # function name should be lowercase
   "N818", # exception name should be named with an Error suffix
+  "PLR0912", # too many branches
   "PLR0913", # too many arguments
+  "PLR0915", # too many statements
   "PLR2004", # Magic value used in comparison,
   "S101", # use of assert
-  "TD003", # Missing issue link on the line following this TODO
-  "FIX002", # Line contains TODO
-  "G004" # Logging statement uses string formatting
+  "TD003" # Missing issue link on the line following this TODO
 ]
 select = [
   "A", # flake8-builtins
@@ -156,4 +196,37 @@ suppress-none-returning = true
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
-"docstrfmt/docstrfmt.py" = ["ARG002", "D101", "D102", "D103", "D107", "ERA001", "N802", "PLR0912", "PLR0915"]
+
+[tool.tox]
+envlist = ["py310", "py311", "py312", "py313", "py314", "pre-commit", "style"]
+minversion = "4.22"
+
+[tool.tox.env.pre-commit]
+commands = [
+  ["pre-commit", "run", "--all-files"]
+]
+description = "run pre-commit on code base"
+dependency_groups = ["lint"]
+
+[tool.tox.env.style]
+commands = [
+  ["ruff", "check"],
+  ["ruff", "format", "--diff", "--target-version", "py310"]
+]
+description = "run lint check on code base"
+dependency_groups = ["lint"]
+
+[tool.tox.env.style-fix]
+commands = [
+  ["ruff", "check", "--fix", "{posargs}"],
+  ["ruff", "format", "--target-version", "py310"]
+]
+description = "run lint check on code base"
+dependency_groups = ["lint"]
+
+[tool.tox.env_run_base]
+commands = [
+  ["pytest", "{posargs}"]
+]
+description = "Run test under {base_python}"
+dependency_groups = ["test"]

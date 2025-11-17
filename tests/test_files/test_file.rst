@@ -1,5 +1,10 @@
-A ReStructuredText Primer
-=========================
+.. meta::
+    :description: Simple file to test the formatting.
+    :keywords: rSt, formatter, test
+
+###########################
+ A ReStructuredText Primer
+###########################
 
 :Author: Richard Jones
 :Version: $Revision: 5801 $
@@ -32,8 +37,9 @@ work, please refer to the `master quick reference`_ document.
 
 .. _unused_ref:
 
-Structure
----------
+***********
+ Structure
+***********
 
 From the **outset**, let me say that "Structured Text" is probably a bit of a misnomer.
 It's more like "Relaxed Text" that uses certain consistent patterns. These patterns are
@@ -66,8 +72,9 @@ Results in:
 
     This is another one.
 
-Text styles
------------
+*************
+ Text styles
+*************
 
 (quickref__)
 
@@ -98,7 +105,7 @@ this:
     `markup spec`__ for full details.
 
 Lists
-~~~~~
+=====
 
 Lists of items come in three main flavors: **enumerated**, **bulleted** and
 **definitions**. In all list cases, you may have as many paragraphs, sublists, etc. as
@@ -209,8 +216,9 @@ Lists must always start a new paragraph -- that is, they must appear after a bla
         body elements, indented relative to the term. Blank lines are not allowed
         between term and definition.
 
-Preformatting (code samples)
-----------------------------
+******************************
+ Preformatting (code samples)
+******************************
 
 (quickref__)
 
@@ -296,6 +304,14 @@ Python code blocks are formatted with Black_ (if it's found on ``PATH``).
         "indented and with line breaks",
         "the way Black does it",
     ]
+
+ReStructuredText code blocks are formatted with docstrfmt itself.
+
+.. code-block:: rst
+
+    .. admonition:: Custom Title
+
+        This is a custom admonition with a title.
 
 .. code-block:: text
 
@@ -412,8 +428,27 @@ And then go back to default highlighting (Python with silent failures).
 
         import image
 
+.. rubric:: Small title
+
+.. centered:: Centered text
+
+.. hlist::
+    :columns: 3
+
+    - Item 1
+    - Item 2
+    - Item 3
+
+.. sectionauthor:: author
+
+.. codeauthor:: author
+
+.. tabularcolumns:: >{\raggedright}\Y{.4}>{\centering}\Y{.1}>{\sphinxcolorblend{!95!red}\centering\noindent\bfseries\color{red}}\Y{.12}>{\raggedright\arraybackslash}\Y{.38}
+
+.. only:: html
+
 Math
-~~~~
+====
 
 .. math::
 
@@ -422,14 +457,16 @@ Math
 
 :math:`\sum_{i=1}^\infty2^{-i}=1`
 
-Auto documented blocks (Sphinx)
--------------------------------
+*********************************
+ Auto documented blocks (Sphinx)
+*********************************
 
 .. automodule:: test
     :inherited-members:
 
-Sections
---------
+**********
+ Sections
+**********
 
 (quickref__)
 
@@ -493,7 +530,7 @@ This is a separator.
 ----
 
 Document Title / Subtitle
-~~~~~~~~~~~~~~~~~~~~~~~~~
+=========================
 
 The title of the whole document is distinct from section titles and may be formatted
 somewhat differently (e.g. the HTML writer by default shows it as a centered heading).
@@ -520,8 +557,9 @@ Note that "Document Title" and "Section Title" above both use equals signs, but 
 distict and unrelated styles. The text of overline-and-underlined titles (but not
 underlined-only) may be inset for aesthetics.
 
-Images
-------
+********
+ Images
+********
 
 (quickref__)
 
@@ -550,13 +588,29 @@ image is to appear in HTML and you wish to supply additional information, you ma
 
 See the full `image directive documentation`__ for more info.
 
-Substitution
-------------
+**************
+ Substitution
+**************
 
-Duis vel nulla ac risus semper fringilla vel non mauris. In elementum viverra arcu sed
-commodo. In hac habitasse platea dictumst. Integer posuere ullamcorper eros ac gravida.
-Nam non ligula ipsum. Nam accumsan |subs|__ ex, nec |ultrices| est vestibulum__ in.
-Vestibulum vitae gravida lorem, vel laoreet lorem.
+.. |logo| image:: logo.png
+    :alt: Alt text
+    :width: 300
+    :height: 200
+    :scale: 50
+    :align: middle
+
+this is a |logo|.
+
+Copyright |copy| 2003, |BogusMegaCorp (TM)| |---| all rights reserved.
+
+.. |copy| unicode:: 0xA9 .. copyright sign
+
+.. |BogusMegaCorp (TM)| unicode:: BogusMegaCorp U+2122
+
+.. with trademark sign
+
+.. |---| unicode:: U+02014 .. em dash
+    :trim:
 
 .. |subs| replace:: ``SUBS``
 
@@ -564,17 +618,38 @@ Vestibulum vitae gravida lorem, vel laoreet lorem.
     semper fringilla vel non mauris. In elementum viverra arcu sed commodo. In hac
     habitasse platea dictumst. Integer posuere ullamcorper eros ac gravida.
 
+Duis :func:`elementum`\ s ac |subs| ex, nec |ultrices| est.
+
 .. _reference_roles:
 
-Ref Roles
----------
+***********
+ Ref Roles
+***********
 
 This is text with a ref role :func:`f`. This has py:func:`f`\ s an ``s`` after it. This
 i an :ref:`example explicit ref <reference_roles>` to this section. This is an
 `anonymous link <http://example.com>`_
 
-Functions
----------
+***********
+ Footnotes
+***********
+
+This is a footnote [1]_. This is another footnote [2]_. This is a third footnote with a
+textual name [footnote]_.
+
+This is an auto footnote [#]_.
+
+.. [#] Check out some stuff here. https://example.com/docs
+
+.. [1] This is a footnote.
+
+.. [2] This is another footnote.
+
+.. [footnote] This is a third footnote with a textual name.
+
+***********
+ Functions
+***********
 
 .. currentmodule:: test_module
 
@@ -597,8 +672,9 @@ Functions
         "the way Black does it",
     ]
 
-Line Blocks
------------
+*************
+ Line Blocks
+*************
 
 |   a
 
@@ -624,8 +700,9 @@ Line Blocks
 
 |
 
-Tables
-------
+********
+ Tables
+********
 
 ===== ===== ======
 A     B     A or B
@@ -707,8 +784,9 @@ True                                .. code-block:: python
                                         )
 ===== ============================= ======================================================================================================
 
-Fields
-------
+********
+ Fields
+********
 
 :param test_param: param text
 :param test_param: param text with note
@@ -748,8 +826,9 @@ Fields
 
 This is an unknown role :lolno:`dolphin` but it's okay.
 
-Comments
---------
+**********
+ Comments
+**********
 
 ..
     Comments       are preserved
@@ -767,8 +846,9 @@ Comments
     (Trailing spaces are still removed, since that happens early in the
     reST parser.)
 
-Extras
-------
+********
+ Extras
+********
 
 - :any:`any`
 - :command:`command`
@@ -795,8 +875,9 @@ Extras
 - :samp:`samp`
 - :term:`term`
 
-What Next?
-----------
+************
+ What Next?
+************
 
 .. seealso::
 
@@ -806,9 +887,9 @@ What Next?
 This primer introduces the most common features of reStructuredText, but there are a lot
 more to explore. The `Quick reStructuredText`_ user reference is a good place to go
 next. For complete details, the `reStructuredText Markup Specification`_ is the place to
-go [1]_ .
+go [3]_.
 
-.. [1] If that relative link doesn't work, try the master document:
+.. [3] If that relative link doesn't work, try the master document:
     http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html.
 
 .. _docutils project web site: http://docutils.sourceforge.net/

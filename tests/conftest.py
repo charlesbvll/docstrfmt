@@ -5,24 +5,26 @@ import shutil
 
 import black
 import pytest
+import logging
 from aiohttp import web
 from click.testing import CliRunner
 
 from docstrfmt import Manager
 from docstrfmt.server import handler
 
+log = logging.getLogger(__name__)
+
 
 @pytest.fixture
-def client(loop, aiohttp_client):
+async def client(aiohttp_client):
     app = web.Application()
     app.router.add_post("/", handler)
-    return loop.run_until_complete(aiohttp_client(app))
+    return await aiohttp_client(app)
 
 
 @pytest.fixture
 def manager():
-    manager = Manager(None, black.Mode())
-    yield manager
+    yield Manager(current_file="<test_file>", black_config=black.Mode(), reporter=log)
 
 
 @pytest.fixture

@@ -4,11 +4,11 @@ jobs:
     name: Tag Release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v5
       with:
         fetch-depth: 3
         ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v6
       with:
         cache: pip
         python-version: 3.x
@@ -42,3 +42,5 @@ on:
     branches:
       - master
       - release_test
+permissions:
+  contents: write

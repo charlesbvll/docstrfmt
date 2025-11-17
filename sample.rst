@@ -1,30 +1,32 @@
-docstrfmt Formatting Sample
-===========================
+#############################
+ docstrfmt Formatting Sample
+#############################
 
 (The purpose of this file is to demonstrate formatting at the reST level, so find a raw
 version if you're seeing this rendered.)
 
-Section headers
----------------
+*****************
+ Section headers
+*****************
 
 The lengths of the section header lines are fixed to match the title text, whether
 they're too long or too short in the input. (They do have to be at least four
 characters, though, or they won't even be parsed as section headers.)
 
 Subsections
-~~~~~~~~~~~
+===========
 
 Subsubsections
-++++++++++++++
+--------------
 
 Subsubsubsections
-.................
+^^^^^^^^^^^^^^^^^
 
 Subsubsubsubsections
-''''''''''''''''''''
+""""""""""""""""""""
 
 Substitution
-""""""""""""
+''''''''''''
 
 Duis vel nulla ac risus semper fringilla vel non mauris. In elementum viverra arcu sed
 commodo. In hac habitasse platea dictumst. Integer posuere ullamcorper eros ac gravida.
@@ -37,8 +39,28 @@ Vestibulum vitae gravida lorem, vel laoreet lorem.
     semper fringilla vel non mauris. In elementum viverra arcu sed commodo. In hac
     habitasse platea dictumst. Integer posuere ullamcorper eros ac gravida.
 
-Wrapping
---------
+Footnotes
+'''''''''
+
+A this is a [footnote]_.
+
+This primer introduces the most common features of reStructuredText, but there are a lot
+more to explore. The user reference is the place to go [1]_ or here [2]_. This is a
+footnote with an auto-generated number [#]_.
+
+.. [footnote] This is a footnote.
+
+.. [1] If that relative link doesn't work, try the master document:
+    http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html.
+
+.. [2] If that relative link doesn't work, try the master document:
+
+.. [#] This is a footnote with an auto-generated number.
+    http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html.
+
+**********
+ Wrapping
+**********
 
 Paragraphs are wrapped to fit within the specified line length.
 
@@ -47,19 +69,18 @@ commodo. In hac habitasse platea dictumst. Integer posuere ullamcorper eros ac g
 Nam non ligula ipsum. Nam accumsan ornare ex, nec ultrices est vestibulum in. Vestibulum
 vitae gravida lorem, vel laoreet lorem.
 
-Indentation
------------
+*************
+ Indentation
+*************
 
-All indentation is done three spaces at a time. This may look a bit odd for bulleted
+All indentation is done four spaces at a time. This may look a bit odd for bulleted
 lists in isolation, but it makes everything consistent.
 
 .. note::
 
     - Thing 1
-
-      1. Thing 2
-      2. Thing 3
-
+          1. Thing 2
+          2. Thing 3
     - term
           definition
 
@@ -67,8 +88,9 @@ lists in isolation, but it makes everything consistent.
             |   the red wheel
             |   barrow
 
-Lists
------
+*******
+ Lists
+*******
 
 Lists of items with no blocks will have no empty lines between them.
 
@@ -102,8 +124,9 @@ If any item has any blocks, empty lines are added between all items.
 
 Enumerated lists are always auto-enumerated.
 
-Code
-----
+******
+ Code
+******
 
 Python code blocks are formatted with Black_ and Go ones with gofmt_ (if it's found on
 ``PATH``).
@@ -119,8 +142,9 @@ Python code blocks are formatted with Black_ and Go ones with gofmt_ (if it's fo
         "the way Black does it",
     ]
 
-Functions
----------
+***********
+ Functions
+***********
 
 .. currentmodule:: test_module
 
@@ -143,8 +167,9 @@ Functions
         "the way Black does it",
     ]
 
-Comments
---------
+**********
+ Comments
+**********
 
 ..
     Comments       are preserved
@@ -162,8 +187,9 @@ Comments
     (Trailing spaces are still removed, since that happens early in the
     reST parser.)
 
-Tables
-------
+********
+ Tables
+********
 
 Here's a grid table followed by a simple table:
 
@@ -176,11 +202,20 @@ False True  True
 True  True  True
 ===== ===== ======
 
-Thanks
-------
+********
+ Thanks
+********
 
 Lorem ipsum text provided by https://www.lipsum.com.
 
 .. _black: https://github.com/psf/black
 
 .. _gofmt: https://blog.golang.org/gofmt
+
+*****
+ Foo
+*****
+
+A footnote [#f1]_.
+
+.. [#f1] Check out some stuff here.
