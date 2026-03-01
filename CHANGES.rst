@@ -6,6 +6,26 @@
  Unreleased
 ************
 
+********************
+ 2.0.2 (2026/02/07)
+********************
+
+**Fixed**
+
+- Fix resolving section adornments from pyproject.toml.
+
+********************
+ 2.0.1 (2025/12/27)
+********************
+
+**Fixed**
+
+- Fixed formatting of Python code blocks with continuation lines in docstrings.
+
+********************
+ 2.0.0 (2025/11/20)
+********************
+
 **Added**
 
 - Added support for Python 3.14.

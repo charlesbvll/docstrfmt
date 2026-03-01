@@ -5,8 +5,8 @@ from datetime import date
 
 import packaging.version
 
-CHANGELOG_HEADER = "Change Log\n==========\n\n"
-UNRELEASED_HEADER = "Unreleased\n----------\n\n"
+CHANGELOG_HEADER = "############\n Change Log\n############\n\n"
+UNRELEASED_HEADER = "************\n Unreleased\n************\n\n"
 
 
 def add_unreleased_to_changelog():
@@ -107,8 +107,10 @@ def update_changelog(version):
         return False
 
     date_string = date.today().strftime("%Y/%m/%d")
-    version_line = f"{version} ({date_string})\n"
-    version_header = f"{version_line}{'-' * len(version_line[:-1])}\n\n"
+    version_line = f" {version} ({date_string})\n"
+    version_header = (
+        f"{'*' * len(version_line)}\n{version_line}{'*' * len(version_line)}\n\n"
+    )
 
     with open("CHANGES.rst", "w") as fp:
         fp.write(f"{CHANGELOG_HEADER}{version_header}{content[len(expected_header) :]}")
